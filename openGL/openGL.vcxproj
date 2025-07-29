@@ -143,24 +143,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EBO.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="shaderClass.cpp" />
+    <ClCompile Include="VAO.cpp" />
+    <ClCompile Include="VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag" />
     <None Include="default.vert" />
-    <None Include="grass.frag" />
-    <None Include="light.frag" />
-    <None Include="light.vert" />
-    <None Include="outlining.frag" />
-    <None Include="outlining.vert" />
-    <None Include="windows.frag" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Textures\brick.png" />
-    <Image Include="Textures\planks.png" />
-    <Image Include="Textures\planksSpec.png" />
-    <Image Include="Textures\pop_cat.png" />
+    <ClInclude Include="EBO.h" />
+    <ClInclude Include="shaderClass.h" />
+    <ClInclude Include="VAO.h" />
+    <ClInclude Include="VBO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
