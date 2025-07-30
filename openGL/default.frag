@@ -4,52 +4,41 @@
 out vec4 FragColor;
 
 
-// Inputs the color from the Vertex Shader
+// Imports the color from the Vertex Shader
 in vec3 color;
-// Inputs the texture coordinates from the Vertex Shader
+// Imports the texture coordinates from the Vertex Shader
 in vec2 texCoord;
+// Imports the normal from the Vertex Shader
+in vec3 Normal;
+// Imports the current position from the Vertex Shader
+in vec3 crntPos;
 
 // Gets the Texture Unit from the main function
 uniform sampler2D tex0;
-
-
-//void main()
-//{
-//	FragColor = texture(tex0, texCoord);
-//}
+// Gets the color of the light from the main function
+uniform vec4 lightColor;
+// Gets the position of the light from the main function
+uniform vec3 lightPos;
+// Gets the position of the camera from the main function
+uniform vec3 camPos;
 
 void main()
 {
-    vec4 texColor = texture(tex0, texCoord);
-    FragColor = texColor * vec4(color, 1.0);
+	// ambient lighting
+	float ambient = 0.20f;
+
+	// diffuse lighting
+	vec3 normal = normalize(Normal);
+	vec3 lightDirection = normalize(lightPos - crntPos);
+	float diffuse = max(dot(normal, lightDirection), 0.0f);
+
+	// specular lighting
+	float specularLight = 0.50f;
+	vec3 viewDirection = normalize(camPos - crntPos);
+	vec3 reflectionDirection = reflect(-lightDirection, normal);
+	float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 8);
+	float specular = specAmount * specularLight;
+
+	// outputs final color
+	FragColor = texture(tex0, texCoord) * lightColor * (diffuse + ambient + specular);
 }
-
-//greyish color
-//void main()
-//{
-//    vec4 texColor = texture(tex0, texCoord);
-//    float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
-//    FragColor = vec4(vec3(gray), texColor.a);
-//}
-
-//Flip
-//void main()
-//{
-//    vec2 flippedTexCoord = vec2(1.0 - texCoord.x, texCoord.y);
-//    FragColor = texture(tex0, flippedTexCoord);
-//}
-
-//offset
-//void main()
-//{
-//    vec2 offsetCoord = texCoord + vec2(0.1, 0.0);
-//    FragColor = texture(tex0, offsetCoord);
-//}
-
-//Bind with a solid color
-//void main()
-//{
-//    vec4 texColor = texture(tex0, texCoord);
-//    vec4 red = vec4(1.0, 0.0, 0.0, 1.0);
-//    FragColor = mix(texColor, red, 0.5); // 50% blend
-//}
