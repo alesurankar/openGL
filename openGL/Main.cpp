@@ -6,8 +6,8 @@ namespace fs = std::filesystem;
 #include"Model.h"
 
 
-const unsigned int width = 800;
-const unsigned int height = 800;
+const unsigned int width = 1880;
+const unsigned int height = 1020;
 
 
 int main()
@@ -76,10 +76,12 @@ int main()
 	* Also note that this requires C++17, so go to Project Properties, C/C++, Language, and select C++17
 	*/
 	std::string parentDir = (fs::current_path().fs::path::parent_path()).string();
-	std::string modelPath = "/OpenGL/Models/bunny/scene.gltf";
+	std::string modelPath1 = "/OpenGL/Models/bunny/scene.gltf";
+	std::string modelPath2 = "/OpenGL/Models/map/scene.gltf";
 
 	// Load in a model
-	Model model((parentDir + modelPath).c_str());
+	Model model1((parentDir + modelPath1).c_str());
+	Model model2((parentDir + modelPath2).c_str());
 
 	// Original code from the tutorial
 	// Model model("models/bunny/scene.gltf");
@@ -98,7 +100,8 @@ int main()
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 		// Draw a model
-		model.Draw(shaderProgram, camera);
+		model1.Draw(shaderProgram, camera);
+		model2.Draw(shaderProgram, camera);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
