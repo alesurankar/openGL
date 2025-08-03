@@ -11,6 +11,23 @@ namespace fs = std::filesystem;
 const unsigned int width = 1880;
 const unsigned int height = 1020;
 
+// Takes care of the information needed to draw the windows
+const unsigned int numWindows = 100;
+glm::vec3 positionsWin[numWindows];
+float rotationsWin[numWindows];
+
+// Takes care of drawing the windows in the right order
+unsigned int orderDraw[numWindows];
+float distanceCamera[numWindows];
+
+// Compare function
+int compare(const void* a, const void* b)
+{
+	double diff = distanceCamera[*(int*)b] - distanceCamera[*(int*)a];
+	return  (0 < diff) - (diff < 0);
+}
+
+
 int main()
 {
 	// Initialize GLFW
@@ -39,7 +56,7 @@ int main()
 	//Load GLAD so it configures OpenGL
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = width, y = height
+	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
 	glViewport(0, 0, width, height);
 
 
@@ -48,8 +65,8 @@ int main()
 
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
-	// Shader for the outlining model
-	Shader outliningProgram("outlining.vert", "outlining.frag");
+	Shader grassProgram("default.vert", "grass.frag");
+	Shader winProgram("default.vert", "windows.frag");
 
 	// Take care of all the light related things
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -60,18 +77,15 @@ int main()
 	shaderProgram.Activate();
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+	grassProgram.Activate();
+	glUniform4f(glGetUniformLocation(grassProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+	glUniform3f(glGetUniformLocation(grassProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
 
 
 
-
-	// Enables the Depth Buffer and choses which depth function to use
+	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
-	// Enables the Stencil Buffer
-	glEnable(GL_STENCIL_TEST);
-	// Sets rules for outcomes of stecil tests
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 	// Enables Cull Facing
 	glEnable(GL_CULL_FACE);
@@ -79,6 +93,8 @@ int main()
 	glCullFace(GL_FRONT);
 	// Uses counter clock-wise standard
 	glFrontFace(GL_CCW);
+	// Configures the blending function
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 2.0f, 2.0f));
@@ -91,24 +107,14 @@ int main()
 	* Also note that this requires C++17, so go to Project Properties, C/C++, Language, and select C++17
 	*/
 	std::string parentDir = (fs::current_path().fs::path::parent_path()).string();
-	std::string modelPath1 = "/OpenGL/Models/bunny/scene.gltf";
-	std::string modelPath2 = "/OpenGL/Models/map/scene.gltf";
-	std::string modelPath3 = "/OpenGL/Models/sword2/sword.gltf";
 	std::string groundPath = "/OpenGL/Models/ground/scene.gltf";
-	std::string treesPath = "/OpenGL/Models/trees/scene.gltf";
-	std::string crowPath = "/OpenGL/Models/crow/scene.gltf";
-	std::string outlinePath = "/OpenGL/Models/crow-outline/scene.gltf";
-	std::string staturePath = "/OpenGL/Models/statue/scene.gltf";
+	std::string grassPath = "/OpenGL/Models/grass/scene.gltf";
+	std::string winPath = "/OpenGL/Models/windows/scene.gltf";
 
 	// Load in models
-	Model model1((parentDir + modelPath1).c_str());
-	Model model2((parentDir + modelPath2).c_str());
-	Model model3((parentDir + modelPath3).c_str());
 	Model ground((parentDir + groundPath).c_str());
-	Model trees((parentDir + treesPath).c_str());
-	Model crow((parentDir + crowPath).c_str());
-	Model outline((parentDir + outlinePath).c_str());
-	Model stature((parentDir + staturePath).c_str());
+	Model grass((parentDir + grassPath).c_str());
+	Model windows((parentDir + winPath).c_str());
 
 	// Variables to create periodic event for FPS displaying
 	double prevTime = 0.0;
@@ -119,6 +125,19 @@ int main()
 
 	// Use this to enable VSync
 	glfwSwapInterval(1);
+
+	// Generates all windows
+	for (unsigned int i = 0; i < numWindows; i++)
+	{
+		positionsWin[i] = glm::vec3
+		(
+			-15.0f + static_cast <float>(rand()) / (static_cast <float>(RAND_MAX / (15.0f - (-15.0f)))),
+			1.0f + static_cast <float>(rand()) / (static_cast <float>(RAND_MAX / (4.0f - 1.0f))),
+			-15.0f + static_cast <float>(rand()) / (static_cast <float>(RAND_MAX / (15.0f - (-15.0f))))
+		);
+		rotationsWin[i] = static_cast <float>(rand()) / (static_cast <float>(RAND_MAX / 1.0f));
+		orderDraw[i] = i;
+	}
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
@@ -133,7 +152,7 @@ int main()
 			// Creates new title
 			std::string FPS = std::to_string((1.0 / timeDiff) * counter);
 			std::string ms = std::to_string((timeDiff / counter) * 1000);
-			std::string newTitle = "OpenGL - " + FPS + "FPS / " + ms + "ms";
+			std::string newTitle = "YoutubeOpenGL - " + FPS + "FPS / " + ms + "ms";
 			glfwSetWindowTitle(window, newTitle.c_str());
 
 			// Resets times and counter
@@ -147,50 +166,39 @@ int main()
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Handles camera inputs
+		// Handles camera inputs (delete this if you have disabled VSync)
 		camera.Inputs(window);
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-		// Make it so the stencil test always passes
-		glStencilFunc(GL_ALWAYS, 1, 0xFF);
-		// Enable modifying of the stencil buffer
-		glStencilMask(0xFF);
-		// Draw models
-		//crow.Draw(shaderProgram, camera);
-		//ground.Draw(shaderProgram, camera);
-		//trees.Draw(shaderProgram, camera);
-		stature.Draw(shaderProgram, camera);
-
-		// Make it so only the pixels without the value 1 pass the test
-		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-		// Disable modifying of the stencil buffer
-		glStencilMask(0x00);
-		// Disable the depth buffer
-		glDisable(GL_DEPTH_TEST);
-
-		// First method from the tutorial
-		//outliningProgram.Activate();
-		//glUniform1f(glGetUniformLocation(outliningProgram.ID, "outlining"), 1.08f);
-		//model.Draw(outliningProgram, camera);
-
-		// Second method from the tutorial
-		//outliningProgram.Activate();
-		//glUniform1f(glGetUniformLocation(outliningProgram.ID, "outlining"), 0.08f);
-		//model.Draw(outliningProgram, camera);
-
-		// Third method from the tutorial
-		//outline.Draw(outliningProgram, camera);
 
 
-		// Enable modifying of the stencil buffer
-		glStencilMask(0xFF);
-		// Clear stencil buffer
-		glStencilFunc(GL_ALWAYS, 0, 0xFF);
-		// Enable the depth buffer
-		glEnable(GL_DEPTH_TEST);
+		// Draw the normal model
+		ground.Draw(shaderProgram, camera);
+
+		// Disable cull face so that grass and windows have both faces
+		glDisable(GL_CULL_FACE);
+		grass.Draw(grassProgram, camera);
+		// Enable blending for windows
+		glEnable(GL_BLEND);
+		// Get distance from each window to the camera
+		for (unsigned int i = 0; i < numWindows; i++)
+		{
+			distanceCamera[i] = glm::length(camera.Position - positionsWin[i]);
+		}
+		// Sort windows by distance from camera
+		qsort(orderDraw, numWindows, sizeof(unsigned int), compare);
+		// Draw windows
+		for (unsigned int i = 0; i < numWindows; i++)
+		{
+			windows.Draw(winProgram, camera);// , positionsWin[orderDraw[i]], glm::quat(1.0f, 0.0f, rotationsWin[orderDraw[i]], 0.0f));
+		}
+		glDisable(GL_BLEND);
+		glEnable(GL_CULL_FACE);
+
+
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -203,9 +211,13 @@ int main()
 
 	// Delete all the objects we've created
 	shaderProgram.Delete();
+	grassProgram.Delete();
+	winProgram.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program
 	glfwTerminate();
 	return 0;
 }
+
+
