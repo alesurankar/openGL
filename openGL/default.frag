@@ -102,8 +102,8 @@ vec4 spotLight()
 	return (texture(diffuse0, texCoord) * (diffuse * inten + ambient) + texture(specular0, texCoord).r * specular * inten) * lightColor;
 }
 
-float near = 0.06f;
-float far = 400.0f;
+float near = 0.01f;
+float far = 200.0f;
 
 float linearizeDepth(float depth)
 {
@@ -120,7 +120,7 @@ float logisticDepth(float depth, float steepness, float offset)
 // Overload with only depth (uses default steepness and offset)
 float logisticDepth(float depth)
 {
-	return logisticDepth(depth, 0.6, 5.0);
+	return logisticDepth(depth, 0.5, 8.0);
 }
 
 void main()
