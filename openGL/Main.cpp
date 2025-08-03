@@ -63,8 +63,9 @@ int main()
 
 
 
-	// Enables the Depth Buffer
+	// Enables the Depth Buffer and choses which depth function to use
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
 	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
@@ -80,11 +81,15 @@ int main()
 	std::string modelPath1 = "/OpenGL/Models/bunny/scene.gltf";
 	std::string modelPath2 = "/OpenGL/Models/map/scene.gltf";
 	std::string modelPath3 = "/OpenGL/Models/sword2/sword.gltf";
+	std::string groundPath = "/OpenGL/Models/ground/scene.gltf";
+	std::string treesPath = "/OpenGL/Models/trees/scene.gltf";
 
-	// Load in a model
+	// Load in models
 	Model model1((parentDir + modelPath1).c_str());
 	Model model2((parentDir + modelPath2).c_str());
 	Model model3((parentDir + modelPath3).c_str());
+	Model ground((parentDir + groundPath).c_str());
+	Model trees((parentDir + treesPath).c_str());
 
 	FrameTimer ft;
 	float frameTime = 0.0f;
@@ -108,7 +113,7 @@ int main()
 		}
 
 		// Specify the color of the background
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		glClearColor(0.85f, 0.85f, 0.90f, 1.0f);
 		// Clean the back buffer and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -117,10 +122,9 @@ int main()
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-		// Draw a model
-		model1.Draw(shaderProgram, camera);
-		model2.Draw(shaderProgram, camera);
-		model3.Draw(shaderProgram, camera);
+		// Draw models
+		ground.Draw(shaderProgram, camera);
+		trees.Draw(shaderProgram, camera);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
