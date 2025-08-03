@@ -4,11 +4,12 @@ namespace fs = std::filesystem;
 //------------------------------
 
 #include"Model.h"
+#include "FrameTimer.h"
+#include <thread>
 
 
 const unsigned int width = 1880;
 const unsigned int height = 1020;
-
 
 int main()
 {
@@ -38,7 +39,7 @@ int main()
 	//Load GLAD so it configures OpenGL
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
+	// In this case the viewport goes from x = 0, y = 0, to x = width, y = height
 	glViewport(0, 0, width, height);
 
 
@@ -78,17 +79,34 @@ int main()
 	std::string parentDir = (fs::current_path().fs::path::parent_path()).string();
 	std::string modelPath1 = "/OpenGL/Models/bunny/scene.gltf";
 	std::string modelPath2 = "/OpenGL/Models/map/scene.gltf";
+	std::string modelPath3 = "/OpenGL/Models/sword2/sword.gltf";
 
 	// Load in a model
 	Model model1((parentDir + modelPath1).c_str());
 	Model model2((parentDir + modelPath2).c_str());
+	Model model3((parentDir + modelPath3).c_str());
 
-	// Original code from the tutorial
-	// Model model("models/bunny/scene.gltf");
+	FrameTimer ft;
+	float frameTime = 0.0f;
+	float fpsTimer = 0.0f;
+	int fpsCount = 0;
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
+		// Check time since last frame
+		frameTime = ft.CheckTime();
+		fpsTimer += frameTime;
+		fpsCount++;
+
+		// Print FPS once per second
+		if (fpsTimer >= 1.0f)
+		{
+			std::cout << "FPS: " << fpsCount << std::endl;
+			fpsCount = 0;
+			fpsTimer = 0.0f;
+		}
+
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
@@ -102,11 +120,13 @@ int main()
 		// Draw a model
 		model1.Draw(shaderProgram, camera);
 		model2.Draw(shaderProgram, camera);
+		model3.Draw(shaderProgram, camera);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
 		glfwPollEvents();
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	}
 
 
