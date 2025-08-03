@@ -110,11 +110,13 @@ int main()
 	std::string groundPath = "/OpenGL/Models/ground/scene.gltf";
 	std::string grassPath = "/OpenGL/Models/grass/scene.gltf";
 	std::string winPath = "/OpenGL/Models/windows/scene.gltf";
+	std::string shapePath = "/OpenGL/Models/shape/untitled.gltf";
 
 	// Load in models
 	Model ground((parentDir + groundPath).c_str());
 	Model grass((parentDir + grassPath).c_str());
 	Model windows((parentDir + winPath).c_str());
+	Model shape((parentDir + shapePath).c_str());
 
 	// Variables to create periodic event for FPS displaying
 	double prevTime = 0.0;
@@ -190,10 +192,12 @@ int main()
 		}
 		// Sort windows by distance from camera
 		qsort(orderDraw, numWindows, sizeof(unsigned int), compare);
+		// Draw shape
+		shape.Draw(shaderProgram, camera);
 		// Draw windows
 		for (unsigned int i = 0; i < numWindows; i++)
 		{
-			windows.Draw(winProgram, camera);// , positionsWin[orderDraw[i]], glm::quat(1.0f, 0.0f, rotationsWin[orderDraw[i]], 0.0f));
+			windows.Draw(winProgram, camera, positionsWin[orderDraw[i]], glm::quat(1.0f, 0.0f, rotationsWin[orderDraw[i]], 0.0f));
 		}
 		glDisable(GL_BLEND);
 		glEnable(GL_CULL_FACE);
