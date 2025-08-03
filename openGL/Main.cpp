@@ -67,11 +67,18 @@ int main()
 
 	// Enables the Depth Buffer and choses which depth function to use
 	glEnable(GL_DEPTH_TEST);
-	//glDepthFunc(GL_LESS);
+	glDepthFunc(GL_LESS);
 	// Enables the Stencil Buffer
 	glEnable(GL_STENCIL_TEST);
 	// Sets rules for outcomes of stecil tests
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
+	// Enables Cull Facing
+	glEnable(GL_CULL_FACE);
+	// Keeps front faces
+	glCullFace(GL_FRONT);
+	// Uses counter clock-wise standard
+	glFrontFace(GL_CCW);
 
 	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 2.0f, 2.0f));
@@ -89,8 +96,9 @@ int main()
 	std::string modelPath3 = "/OpenGL/Models/sword2/sword.gltf";
 	std::string groundPath = "/OpenGL/Models/ground/scene.gltf";
 	std::string treesPath = "/OpenGL/Models/trees/scene.gltf";
-	std::string modelPath = "/OpenGL/Models/crow/scene.gltf";
+	std::string crowPath = "/OpenGL/Models/crow/scene.gltf";
 	std::string outlinePath = "/OpenGL/Models/crow-outline/scene.gltf";
+	std::string staturePath = "/OpenGL/Models/statue/scene.gltf";
 
 	// Load in models
 	Model model1((parentDir + modelPath1).c_str());
@@ -98,28 +106,42 @@ int main()
 	Model model3((parentDir + modelPath3).c_str());
 	Model ground((parentDir + groundPath).c_str());
 	Model trees((parentDir + treesPath).c_str());
-	Model model((parentDir + modelPath).c_str());
+	Model crow((parentDir + crowPath).c_str());
 	Model outline((parentDir + outlinePath).c_str());
+	Model stature((parentDir + staturePath).c_str());
 
-	FrameTimer ft;
-	float frameTime = 0.0f;
-	float fpsTimer = 0.0f;
-	int fpsCount = 0;
+	// Variables to create periodic event for FPS displaying
+	double prevTime = 0.0;
+	double crntTime = 0.0;
+	double timeDiff;
+	// Keeps track of the amount of frames in timeDiff
+	unsigned int counter = 0;
+
+	// Use this to enable VSync
+	glfwSwapInterval(1);
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
-		// Check time since last frame
-		frameTime = ft.CheckTime();
-		fpsTimer += frameTime;
-		fpsCount++;
+		// Updates counter and times
+		crntTime = glfwGetTime();
+		timeDiff = crntTime - prevTime;
+		counter++;
 
-		// Print FPS once per second
-		if (fpsTimer >= 1.0f)
+		if (timeDiff >= 1.0 / 30.0)
 		{
-			std::cout << "FPS: " << fpsCount << std::endl;
-			fpsCount = 0;
-			fpsTimer = 0.0f;
+			// Creates new title
+			std::string FPS = std::to_string((1.0 / timeDiff) * counter);
+			std::string ms = std::to_string((timeDiff / counter) * 1000);
+			std::string newTitle = "OpenGL - " + FPS + "FPS / " + ms + "ms";
+			glfwSetWindowTitle(window, newTitle.c_str());
+
+			// Resets times and counter
+			prevTime = crntTime;
+			counter = 0;
+
+			// Use this if you have disabled VSync
+			//camera.Inputs(window);
 		}
 
 		// Specify the color of the background
@@ -137,9 +159,10 @@ int main()
 		// Enable modifying of the stencil buffer
 		glStencilMask(0xFF);
 		// Draw models
-		model.Draw(shaderProgram, camera);
-		ground.Draw(shaderProgram, camera);
-		trees.Draw(shaderProgram, camera);
+		//crow.Draw(shaderProgram, camera);
+		//ground.Draw(shaderProgram, camera);
+		//trees.Draw(shaderProgram, camera);
+		stature.Draw(shaderProgram, camera);
 
 		// Make it so only the pixels without the value 1 pass the test
 		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
@@ -159,7 +182,7 @@ int main()
 		//model.Draw(outliningProgram, camera);
 
 		// Third method from the tutorial
-		outline.Draw(outliningProgram, camera);
+		//outline.Draw(outliningProgram, camera);
 
 
 		// Enable modifying of the stencil buffer
