@@ -6,7 +6,7 @@ class FrameTimer
 {
 public:
 	FrameTimer();
-	float CheckTime();
+	float Mark();
 public:
 	std::chrono::steady_clock::time_point last;
 };

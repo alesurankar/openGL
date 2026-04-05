@@ -59,25 +59,25 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag">
+    <None Include="shaders\default.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="default.vert">
+    <None Include="shaders\default.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="light.frag">
+    <None Include="shaders\light.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="light.vert">
+    <None Include="shaders\light.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="outlining.frag">
+    <None Include="shaders\outlining.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="outlining.vert">
+    <None Include="shaders\outlining.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="grass.frag">
+    <None Include="shaders\grass.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="windows.frag">

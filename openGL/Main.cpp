@@ -1,7 +1,5 @@
-//------- Ignore this ----------
 #include<filesystem>
 namespace fs = std::filesystem;
-//------------------------------
 
 #include"Model.h"
 #include "FrameTimer.h"
@@ -44,8 +42,7 @@ int main()
 	// Create a GLFWwindow object of width by height, naming it "OpenGL"
 	GLFWwindow* window = glfwCreateWindow(width, height, "OpenGL", NULL, NULL);
 	// Error check if the window fails to create
-	if (window == NULL)
-	{
+	if (window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
@@ -64,9 +61,9 @@ int main()
 
 
 	// Generates Shader object using shaders default.vert and default.frag
-	Shader shaderProgram("default.vert", "default.frag");
-	Shader grassProgram("default.vert", "grass.frag");
-	Shader winProgram("default.vert", "windows.frag");
+	Shader shaderProgram("shaders/default.vert", "shaders/default.frag");
+	Shader grassProgram("shaders/default.vert", "shaders/grass.frag");
+	Shader winProgram("shaders/default.vert", "shaders/windows.frag");
 
 	// Take care of all the light related things
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -129,8 +126,7 @@ int main()
 	glfwSwapInterval(1);
 
 	// Generates all windows
-	for (unsigned int i = 0; i < numWindows; i++)
-	{
+	for (unsigned int i = 0; i < numWindows; i++) {
 		positionsWin[i] = glm::vec3
 		(
 			-15.0f + static_cast <float>(rand()) / (static_cast <float>(RAND_MAX / (15.0f - (-15.0f)))),
@@ -142,15 +138,13 @@ int main()
 	}
 
 	// Main while loop
-	while (!glfwWindowShouldClose(window))
-	{
+	while (!glfwWindowShouldClose(window)) {
 		// Updates counter and times
 		crntTime = glfwGetTime();
 		timeDiff = crntTime - prevTime;
 		counter++;
 
-		if (timeDiff >= 1.0 / 30.0)
-		{
+		if (timeDiff >= 1.0 / 30.0) {
 			// Creates new title
 			std::string FPS = std::to_string((1.0 / timeDiff) * counter);
 			std::string ms = std::to_string((timeDiff / counter) * 1000);
@@ -175,9 +169,6 @@ int main()
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-
-
-		// Draw the normal model
 		ground.Draw(shaderProgram, camera);
 
 		// Disable cull face so that grass and windows have both faces
@@ -186,8 +177,7 @@ int main()
 		// Enable blending for windows
 		glEnable(GL_BLEND);
 		// Get distance from each window to the camera
-		for (unsigned int i = 0; i < numWindows; i++)
-		{
+		for (unsigned int i = 0; i < numWindows; i++) {
 			distanceCamera[i] = glm::length(camera.Position - positionsWin[i]);
 		}
 		// Sort windows by distance from camera
@@ -195,31 +185,21 @@ int main()
 		// Draw shape
 		shape.Draw(shaderProgram, camera);
 		// Draw windows
-		for (unsigned int i = 0; i < numWindows; i++)
-		{
+		for (unsigned int i = 0; i < numWindows; i++) {
 			windows.Draw(winProgram, camera, positionsWin[orderDraw[i]], glm::quat(1.0f, 0.0f, rotationsWin[orderDraw[i]], 0.0f));
 		}
 		glDisable(GL_BLEND);
 		glEnable(GL_CULL_FACE);
 
-
-
-		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
-		// Take care of all GLFW events
 		glfwPollEvents();
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	}
 
-
-
-	// Delete all the objects we've created
 	shaderProgram.Delete();
 	grassProgram.Delete();
 	winProgram.Delete();
-	// Delete window before ending the program
 	glfwDestroyWindow(window);
-	// Terminate GLFW before ending the program
 	glfwTerminate();
 	return 0;
 }

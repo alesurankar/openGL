@@ -23,21 +23,12 @@ Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::v
 }
 
 
-void Mesh::Draw
-(
-	Shader& shader,
-	Camera& camera,
-	glm::mat4 matrix,
-	glm::vec3 translation,
-	glm::quat rotation,
-	glm::vec3 scale
-)
+void Mesh::Draw(Shader& shader, Camera& camera, glm::mat4 matrix,
+	glm::vec3 translation, glm::quat rotation, glm::vec3 scale)
 {
-	// Bind shader to be able to access uniforms
 	shader.Activate();
 	VAO.Bind();
-
-	// Keep track of how many of each type of textures we have
+	
 	unsigned int numDiffuse = 0;
 	unsigned int numSpecular = 0;
 
