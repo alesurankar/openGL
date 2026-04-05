@@ -173,7 +173,7 @@
     <ClInclude Include="src\app\App.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\graphics\EBO.h" />
-    <ClInclude Include="src\utils\MyTimer.h" />
+    <ClInclude Include="src\utils\FrameTimer.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\ShaderClass.h" />

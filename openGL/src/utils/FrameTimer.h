@@ -2,10 +2,10 @@
 #include <chrono>
 
 
-class MyTimer
+class FrameTimer
 {
 public:
-	MyTimer() noexcept
+	FrameTimer() noexcept
 	{
 		last = std::chrono::steady_clock::now();
 	}
