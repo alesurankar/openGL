@@ -1,8 +1,8 @@
 #include<filesystem>
 namespace fs = std::filesystem;
 
-#include"Model.h"
-#include "FrameTimer.h"
+#include <Model.h>
+#include <utils/FrameTimer.h>
 #include <thread>
 
 

@@ -118,6 +118,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -135,6 +136,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)/src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,18 +146,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\app\App.cpp" />
     <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\EBO.cpp" />
-    <ClCompile Include="src\FrameTimer.cpp" />
-    <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\graphics\EBO.cpp" />
+    <ClCompile Include="src\utils\FrameTimer.cpp" />
+    <ClCompile Include="src\external\glad.c" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
-    <ClCompile Include="src\shaderClass.cpp" />
-    <ClCompile Include="src\stb.cpp" />
+    <ClCompile Include="src\ShaderClass.cpp" />
+    <ClCompile Include="src\external\stb.cpp" />
     <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\VAO.cpp" />
-    <ClCompile Include="src\VBO.cpp" />
+    <ClCompile Include="src\graphics\VAO.cpp" />
+    <ClCompile Include="src\graphics\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\default.frag" />
@@ -168,15 +171,16 @@
     <None Include="shaders\windows.frag" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\app\App.h" />
     <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\EBO.h" />
-    <ClInclude Include="src\FrameTimer.h" />
+    <ClInclude Include="src\graphics\EBO.h" />
+    <ClInclude Include="src\utils\FrameTimer.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\Model.h" />
-    <ClInclude Include="src\shaderClass.h" />
+    <ClInclude Include="src\ShaderClass.h" />
     <ClInclude Include="src\Texture.h" />
-    <ClInclude Include="src\VAO.h" />
-    <ClInclude Include="src\VBO.h" />
+    <ClInclude Include="src\graphics\VAO.h" />
+    <ClInclude Include="src\graphics\VBO.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\brick.png" />

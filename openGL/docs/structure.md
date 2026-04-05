@@ -3,16 +3,21 @@
 
 ```text
 src/
+├─ app/
+│   └─ App
+├─ external/
+│   ├─ stb.cpp
+│   └─ glad.c
+├─ graphics/
+│   ├─ EBO
+│   ├─ VAO
+│   └─ VBO
+├─ utils/
+│   └─ FrameTimer
 ├─ Camera
-├─ EBO
-├─ FrameTimer
-├─ glad.c
 ├─ Main.cpp  # entry
 ├─ Mesh
 ├─ Model
-├─ shaderClass
-├─ stb.cpp
-├─ Texture
-├─ VAO
-└─ VBO
+├─ ShaderClass
+└─ Texture
 ```
