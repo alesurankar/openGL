@@ -2,7 +2,7 @@
 namespace fs = std::filesystem;
 
 #include <Model.h>
-#include <utils/FrameTimer.h>
+#include <utils/MyTimer.h>
 #include <thread>
 
 

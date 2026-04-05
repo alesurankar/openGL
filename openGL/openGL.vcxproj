@@ -149,7 +149,6 @@
     <ClCompile Include="src\app\App.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\graphics\EBO.cpp" />
-    <ClCompile Include="src\utils\FrameTimer.cpp" />
     <ClCompile Include="src\external\glad.c" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -174,7 +173,7 @@
     <ClInclude Include="src\app\App.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\graphics\EBO.h" />
-    <ClInclude Include="src\utils\FrameTimer.h" />
+    <ClInclude Include="src\utils\MyTimer.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\ShaderClass.h" />
