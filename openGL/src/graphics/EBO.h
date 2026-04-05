@@ -14,7 +14,6 @@ public:
 	~EBO();
 	void Bind();
 	void Unbind();
-	void Delete();
 public:
 	GLuint ID = 0;
 };

@@ -9,9 +9,9 @@ src/
 │   ├─ stb.cpp
 │   └─ glad.c
 ├─ graphics/
-│   ├─ EBO
-│   ├─ VAO
-│   └─ VBO
+│   ├─ EBO      # Index buffer object
+│   ├─ VAO      # Vertex Array Object
+│   └─ VBO      # Vertex Buffer Object
 ├─ utils/
 │   └─ FrameTimer
 ├─ Camera

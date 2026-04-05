@@ -15,10 +15,12 @@ struct Vertex
 class VBO
 {
 public:
-	VBO(std::vector<Vertex>& vertices);
+	VBO(const std::vector<Vertex>& vertices); 
+	VBO(const VBO&) = delete;
+	VBO& operator=(const VBO&) = delete;
+	~VBO();
 	void Bind();
 	void Unbind();
-	void Delete();
 public:
 	GLuint ID;
 };

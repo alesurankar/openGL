@@ -7,10 +7,12 @@ class VAO
 {
 public:
 	VAO();
+	VAO(const VAO&) = delete;
+	VAO& operator=(const VAO&) = delete;
+	~VAO();
 	void LinkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizei stride, void* offset);
 	void Bind();
 	void Unbind();
-	void Delete();
 public:
 	GLuint ID;
 };
