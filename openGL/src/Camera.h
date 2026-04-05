@@ -1,6 +1,4 @@
-#ifndef CAMERA_CLASS_H
-#define CAMERA_CLASS_H
-
+#pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -29,4 +27,3 @@ public:
 	float speed = 0.1f;
 	float sensitivity = 100.0f;
 };
-#endif

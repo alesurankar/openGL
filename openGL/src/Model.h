@@ -1,11 +1,9 @@
-#ifndef MODEL_CLASS_H
-#define MODEL_CLASS_H
-
+#pragma once
 #include <json/json.h>
 #include "Mesh.h"
 
-using json = nlohmann::json;
 
+using json = nlohmann::json;
 
 class Model
 {
@@ -42,4 +40,3 @@ private:
 	std::vector<std::string> loadedTexName;
 	std::vector<Texture> loadedTex;
 };
-#endif

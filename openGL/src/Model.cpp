@@ -1,5 +1,6 @@
 #include "Model.h"
 
+
 Model::Model(const char* file)
 {
 	// Make a JSON object

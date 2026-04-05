@@ -1,6 +1,4 @@
-#ifndef MESH_CLASS_H
-#define MESH_CLASS_H
-
+#pragma once
 #include <string>
 #include <graphics/VAO.h>
 #include <graphics/EBO.h>
@@ -27,4 +25,3 @@ public:
 	std::vector <Texture> textures;
 	VAO VAO;
 };
-#endif
