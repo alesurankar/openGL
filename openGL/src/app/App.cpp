@@ -1,36 +1,34 @@
 #include "App.h"
-#include <utils/MyException.h>
+#include <utils/DebugLog.h>
 
+
+App::App()
+	:
+	wnd(800, 600, "OpenGL App")
+{
+	DBG_LOG("Constructing App");
+}
+
+App::~App()
+{
+	DBG_LOG("Destroying App");
+}
 
 int App::Run()
 {
-	// Initialize GLFW
-	if (!glfwInit()) {
-		throw MyException(__LINE__, __FILE__);
+	DBG_LOG("App::Run");
+	while (true)
+	{
+		// process all messages pending, but to not block for new messages
+		if (const auto ecode = Window::ProcessMessages())
+		{
+			// if return optional has value, means we're quitting so return exit code
+			return *ecode;
+		}
+		DoFrame();
 	}
+}
 
-	// Create window
-	GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL App", nullptr, nullptr);
-	if (!window) {
-		glfwTerminate();
-		throw MyException(__LINE__, __FILE__);
-	}
-
-	// Main loop
-	while (!glfwWindowShouldClose(window) && running) {
-		// Clear screen
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// TODO: handle input, update, render
-
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
-
-	// Cleanup
-	glfwDestroyWindow(window);
-	glfwTerminate();
-
-	return 0;
+void App::DoFrame()
+{
 }

@@ -11,7 +11,8 @@ src/
 │   ├─ utils/   
 │   │   └─ WindowManagerUtils
 │   ├─ App
-│   └─ EntryPoint     # entry
+│   ├─ AppEntry     # entry
+│   └─ Window
 │
 ├─ external/
 │   ├─ stb.cpp
@@ -34,6 +35,7 @@ src/
 │       └─ Texture   # Image texture loader
 │
 └─ utils/
+    ├─ DebugLog
     ├─ FrameTimer
     └─ MyException
 ```

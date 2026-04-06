@@ -1,14 +1,16 @@
 #pragma once
-#include <glad/glad.h> 
-#include <GLFW/glfw3.h>
-
+#include <app/Window.h>
+#include <utils/FrameTimer.h>
 
 class App
 {
 public:
+	App();
+	~App();
 	int Run();
 private:
-	static GLFWwindow* InitWindow(int width, int height, const char* title);
+	void DoFrame();
 private:
-	bool running = true;
+	Window wnd;
+	FrameTimer ft;
 };
