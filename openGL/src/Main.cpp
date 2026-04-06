@@ -1,7 +1,7 @@
 #include<filesystem>
 namespace fs = std::filesystem;
 
-#include <Model.h>
+#include <graphics/model/Model.h>
 #include <utils/FrameTimer.h>
 #include <thread>
 
@@ -203,5 +203,3 @@ int main()
 	glfwTerminate();
 	return 0;
 }
-
-

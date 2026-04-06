@@ -1,6 +1,6 @@
 #pragma once
 #include <json/json.h>
-#include "Mesh.h"
+#include <graphics/mesh/Mesh.h>
 
 
 using json = nlohmann::json;

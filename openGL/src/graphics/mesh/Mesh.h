@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
-#include <graphics/VAO.h>
-#include <graphics/EBO.h>
-#include "Camera.h"
-#include "Texture.h"
+#include <graphics/core/VAO.h>
+#include <graphics/core/EBO.h>
+#include <graphics/camera/Camera.h>
+#include <graphics/texture/Texture.h>
 
 
 class Mesh

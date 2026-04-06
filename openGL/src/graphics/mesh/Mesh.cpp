@@ -29,7 +29,7 @@ void Mesh::Draw(Shader& shader, Camera& camera, glm::mat4 matrix,
 {
 	shader.Activate();
 	VAO.Bind();
-	
+
 	unsigned int numDiffuse = 0;
 	unsigned int numSpecular = 0;
 
