@@ -12,7 +12,9 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
-	static std::optional<int> ProcessMessages() noexcept;
+	GLFWwindow* GetHandle() const { return handle_; }
+	static inline std::optional<int> quitCode_ = std::nullopt;
+	static std::optional<int> ProcessMessages(GLFWwindow* window) noexcept;
 private:
 	int width;
 	int height;

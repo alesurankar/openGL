@@ -43,7 +43,13 @@ Window::~Window()
 	glfwTerminate();
 }
 
-std::optional<int> Window::ProcessMessages() noexcept
+std::optional<int> Window::ProcessMessages(GLFWwindow* window) noexcept
 {
-	return std::optional<int>();
+	glfwPollEvents();
+
+	if (window && glfwWindowShouldClose(window)) {
+		quitCode_ = 0;
+	}
+
+	return quitCode_;
 }

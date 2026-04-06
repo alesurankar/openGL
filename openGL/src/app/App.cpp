@@ -17,12 +17,8 @@ App::~App()
 int App::Run()
 {
 	DBG_LOG("App::Run");
-	while (true)
-	{
-		// process all messages pending, but to not block for new messages
-		if (const auto ecode = Window::ProcessMessages())
-		{
-			// if return optional has value, means we're quitting so return exit code
+	while (true) {
+		if (const auto ecode = Window::ProcessMessages(wnd.GetHandle())) {
 			return *ecode;
 		}
 		DoFrame();
