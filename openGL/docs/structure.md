@@ -10,7 +10,8 @@ src/
 │   │   └─ WindowManager
 │   ├─ utils/   
 │   │   └─ WindowManagerUtils
-│   └─ Main.cpp      # entry
+│   ├─ App
+│   └─ EntryPoint     # entry
 │
 ├─ external/
 │   ├─ stb.cpp
@@ -33,5 +34,6 @@ src/
 │       └─ Texture   # Image texture loader
 │
 └─ utils/
-    └─ FrameTimer
+    ├─ FrameTimer
+    └─ MyException
 ```

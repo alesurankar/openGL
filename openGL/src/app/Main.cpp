@@ -31,6 +31,4 @@ int main()
 
     std::string parentDir = fs::current_path().parent_path().string();
     auto models = LoadModels(parentDir);
-
-    // window generation, main loop, etc.
 }
