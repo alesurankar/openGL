@@ -3,11 +3,19 @@
 
 ```text
 src/
-├─ app/
-│   └─ App
+├─ app/   
+│   ├─ manager/   
+│   │   ├─ GraphicsManager
+│   │   ├─ ModelManager
+│   │   └─ WindowManager
+│   ├─ utils/   
+│   │   └─ WindowManagerUtils
+│   └─ Main.cpp      # entry
+│
 ├─ external/
 │   ├─ stb.cpp
 │   └─ glad.c
+│
 ├─ graphics/
 │   ├─ camera/
 │   │   └─ Camera
@@ -23,7 +31,7 @@ src/
 │   │   └─ ShaderClass  # Shader program wrapper
 │   └─ texture/
 │       └─ Texture   # Image texture loader
-├─ utils/
-│   └─ FrameTimer
-└─ Main.cpp      # entry
+│
+└─ utils/
+    └─ FrameTimer
 ```
