@@ -32,6 +32,7 @@ Window::Window(int width_in, int height_in, const char* title)
 	glfwSetFramebufferSizeCallback(handle_, [](GLFWwindow* win, int w, int h) {
 		glViewport(0, 0, w, h);
 		});
+	gfx_ = std::make_unique<Graphics>(handle_);
 }
 
 Window::~Window()
@@ -52,4 +53,9 @@ std::optional<int> Window::ProcessMessages(GLFWwindow* window) noexcept
 	}
 
 	return quitCode_;
+}
+
+Graphics& Window::Gfx()
+{
+	return *gfx_;
 }

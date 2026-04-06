@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\app\App.cpp" />
+    <ClCompile Include="src\app\Graphics.cpp" />
     <ClCompile Include="src\app\manager\GraphicsManager.cpp" />
     <ClCompile Include="src\graphics\camera\Camera.cpp" />
     <ClCompile Include="src\graphics\core\EBO.cpp" />
@@ -178,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\app\App.h" />
+    <ClInclude Include="src\app\Graphics.h" />
     <ClInclude Include="src\app\manager\GraphicsManager.h" />
     <ClInclude Include="src\graphics\camera\Camera.h" />
     <ClInclude Include="src\graphics\core\EBO.h" />
