@@ -4,6 +4,9 @@
 ```text
 src/
 ├─ app/   
+│   ├─ input/   
+│   │   ├─ Keyboard
+│   │   └─ Mouse
 │   ├─ manager/   
 │   │   ├─ GraphicsManager
 │   │   └─ ModelManager

@@ -148,8 +148,10 @@
   <ItemGroup>
     <ClCompile Include="src\app\App.cpp" />
     <ClCompile Include="src\app\Graphics.cpp" />
+    <ClCompile Include="src\app\input\Keyboard.cpp" />
     <ClCompile Include="src\app\Main.cpp" />
     <ClCompile Include="src\app\manager\GraphicsManager.cpp" />
+    <ClCompile Include="src\app\input\Mouse.cpp" />
     <ClCompile Include="src\graphics\camera\Camera.cpp" />
     <ClCompile Include="src\graphics\core\EBO.cpp" />
     <ClCompile Include="src\external\glad.c" />
@@ -179,7 +181,9 @@
   <ItemGroup>
     <ClInclude Include="src\app\App.h" />
     <ClInclude Include="src\app\Graphics.h" />
+    <ClInclude Include="src\app\input\Keyboard.h" />
     <ClInclude Include="src\app\manager\GraphicsManager.h" />
+    <ClInclude Include="src\app\input\Mouse.h" />
     <ClInclude Include="src\graphics\camera\Camera.h" />
     <ClInclude Include="src\graphics\core\EBO.h" />
     <ClInclude Include="src\app\manager\ModelManager.h" />
