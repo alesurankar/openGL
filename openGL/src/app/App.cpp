@@ -21,12 +21,19 @@ int App::Run()
 		if (const auto ecode = Window::ProcessMessages(wnd.GetHandle())) {
 			return *ecode;
 		}
-		DoFrame();
+		wnd.Gfx().BeginFrame(0.07f, 0.0f, 0.12f);
+		UpdateFrame();
+		DrawFrame();
+		wnd.Gfx().EndFrame();
 	}
 }
 
-void App::DoFrame()
+void App::UpdateFrame()
 {
-	wnd.Gfx().BeginFrame(0.07f, 0.0f, 0.12f);
-	wnd.Gfx().EndFrame();
+	float dt = ft.Mark();
+}
+
+void App::DrawFrame()
+{
+
 }

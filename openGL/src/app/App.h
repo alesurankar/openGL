@@ -9,7 +9,8 @@ public:
 	~App();
 	int Run();
 private:
-	void DoFrame();
+	void UpdateFrame();
+	void DrawFrame();
 private:
 	Window wnd;
 	FrameTimer ft;

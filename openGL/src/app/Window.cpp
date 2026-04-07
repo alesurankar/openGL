@@ -23,6 +23,7 @@ Window::Window(int width_in, int height_in, const char* title)
 	}
 
 	glfwMakeContextCurrent(handle_);
+	glfwSwapInterval(2); // enable vsync
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		glfwDestroyWindow(handle_);
 		glfwTerminate();

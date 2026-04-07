@@ -32,9 +32,11 @@ public:
     LoggerScope(const std::string& file) 
     {
         Logger::Init(file);
+        Logger::Log("Initializing Logger");
     }
     ~LoggerScope() 
     {
+        Logger::Log("Closing Logger");
         Logger::Close();
     }
 };
