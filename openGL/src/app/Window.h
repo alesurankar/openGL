@@ -2,6 +2,8 @@
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
 #include <app/Graphics.h>
+#include <app/input/Keyboard.h>
+#include <app/input/Mouse.h>
 #include <string>
 #include <optional>
 #include <memory>
@@ -16,7 +18,10 @@ public:
 	GLFWwindow* GetHandle() const { return handle_; }
 	static inline std::optional<int> quitCode_ = std::nullopt;
 	static std::optional<int> ProcessMessages(GLFWwindow* window) noexcept;
-	Graphics& Gfx();
+	Graphics& Gfx(); 
+public:
+	Keyboard kbd;
+	Mouse mouse;
 private:
 	int width;
 	int height;
