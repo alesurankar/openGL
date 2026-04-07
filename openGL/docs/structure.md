@@ -6,12 +6,12 @@ src/
 ├─ app/   
 │   ├─ manager/   
 │   │   ├─ GraphicsManager
-│   │   ├─ ModelManager
-│   │   └─ WindowManager
+│   │   └─ ModelManager
 │   ├─ utils/   
 │   │   └─ WindowManagerUtils
 │   ├─ App
-│   ├─ AppEntry     # entry
+│   ├─ Graphics
+│   ├─ Main.cpp    # entry
 │   └─ Window
 │
 ├─ external/
